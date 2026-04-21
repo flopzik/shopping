@@ -1,16 +1,9 @@
 import { useShopping } from "../hooks/useShopping";
+import { useShoppingActions } from "../hooks/useShoppingActions";
 
 function AddItemForm() {
-  const {
-    categories,
-    itemName,
-    setItemName,
-    category,
-    setCategory,
-    addItem,
-    error,
-    setError,
-  } = useShopping();
+  const { state, categories } = useShopping();
+  const { setItemName, setCategory, addItem, setError } = useShoppingActions();
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -26,7 +19,7 @@ function AddItemForm() {
         <input
           type="text"
           placeholder="Введіть назву товару"
-          value={itemName}
+          value={state.form.itemName}
           onChange={(e) => {
             setItemName(e.target.value);
             setError("");
@@ -34,7 +27,10 @@ function AddItemForm() {
           onKeyDown={handleKeyDown}
         />
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <select
+          value={state.form.category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
           {categories.map((cat) => (
             <option key={cat}>{cat}</option>
           ))}
@@ -43,7 +39,7 @@ function AddItemForm() {
         <button onClick={addItem}>Додати</button>
       </div>
 
-      {error && <p className="error">{error}</p>}
+      {state.error && <p className="error">{state.error}</p>}
     </div>
   );
 }

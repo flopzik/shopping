@@ -1,19 +1,16 @@
 import { useShopping } from "../hooks/useShopping";
+import { useShoppingActions } from "../hooks/useShoppingActions";
 
 function Filters() {
+  const { state, categories } = useShopping();
   const {
-    categories,
-    search,
     setSearch,
-    categoryFilter,
     setCategoryFilter,
-    statusFilter,
     setStatusFilter,
-    sortBy,
     setSortBy,
     clearBoughtItems,
     clearAllItems,
-  } = useShopping();
+  } = useShoppingActions();
 
   return (
     <div className="card">
@@ -25,7 +22,7 @@ function Filters() {
           <input
             type="text"
             placeholder="Пошук за назвою"
-            value={search}
+            value={state.filters.search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
@@ -33,7 +30,7 @@ function Filters() {
         <div className="field">
           <label>Категорія</label>
           <select
-            value={categoryFilter}
+            value={state.filters.categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
             <option>Усі</option>
@@ -46,7 +43,7 @@ function Filters() {
         <div className="field">
           <label>Статус</label>
           <select
-            value={statusFilter}
+            value={state.filters.statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option>Усі</option>
@@ -57,7 +54,10 @@ function Filters() {
 
         <div className="field">
           <label>Сортування</label>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <select
+            value={state.filters.sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
             <option value="newest">Спочатку нові</option>
             <option value="name-asc">Назва А-Я</option>
             <option value="name-desc">Назва Я-А</option>

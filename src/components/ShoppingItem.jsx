@@ -1,7 +1,7 @@
-import { useShopping } from "../hooks/useShopping";
+import { useShoppingActions } from "../hooks/useShoppingActions";
 
 function ShoppingItem({ item }) {
-  const { toggleBought, deleteItem } = useShopping();
+  const { toggleBought, deleteItem } = useShoppingActions();
 
   return (
     <li className={item.bought ? "list-item bought" : "list-item"}>
